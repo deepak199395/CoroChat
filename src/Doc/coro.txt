@@ -1,2 +1,12 @@
 npx @react-native-community/cli@latest init AwesomeProject
 npx react-native run-android
+
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main                    # Rename branch to main (optional)
+git remote add origin <repo_url>     # e.g., https://github.com/yourname/repo.git
+git push -u origin main              # Push to remote and set upstream
+
+git remote add origin https://github.com/deepak199395/CoroChat.git
+git push -u origin main
