@@ -1,1 +1,2 @@
 npx @react-native-community/cli@latest init AwesomeProject
+npx react-native run-android
