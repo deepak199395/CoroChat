@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import AppRounter from './src/Rounters/AppRounter'
 
-const App = () => {
+const Footer = () => {
   return (
-    <View style={{flex:1}}>
-      <AppRounter/>
+    <View>
+      <Text>Footer</Text>
     </View>
   )
 }
 
-export default App
+export default Footer
 
 const styles = StyleSheet.create({})

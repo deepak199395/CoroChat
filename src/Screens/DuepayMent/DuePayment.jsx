@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import AppRounter from './src/Rounters/AppRounter'
 
-const App = () => {
+const DuePayment = () => {
   return (
-    <View style={{flex:1}}>
-      <AppRounter/>
+    <View>
+      <Text>DuePayment</Text>
     </View>
   )
 }
 
-export default App
+export default DuePayment
 
 const styles = StyleSheet.create({})
