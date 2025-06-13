@@ -13,6 +13,7 @@ import RegisterScreen from '../Screens/Auth/RegisterScreen';
 import Packege from '../Screens/Packege/Packege';
 import CreateDueForm from '../Screens/Packege/CreateDueForm';
 import Showloan from '../Screens/Packege/Showloan';
+import DetailsLoanFile from '../Screens/Packege/DetailsLoanFile';
 
 
 const AppRounter = () => {
@@ -31,6 +32,7 @@ const AppRounter = () => {
                 <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
                 <Stack.Screen name='CreateDueForm' component={CreateDueForm}/>
                 <Stack.Screen name='Showloan' component={Showloan}/>
+                <Stack.Screen name='DetailsLoanFile' component={DetailsLoanFile}/>
             </Stack.Navigator>
         </NavigationContainer>
 

@@ -1,7 +1,10 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const MainFile = () => {
+  const navigation = useNavigation();
+  
   const [loanData, setLoanData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,13 +28,18 @@ const MainFile = () => {
     fetchLoans();
   }, []);
 
+  const HandleLoan= ()=>{
+    navigation.navigate('DetailsLoanFile')
+  }
+
+
   const renderLoanItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text style={styles.label}>Loan ID: <Text style={styles.value}>{item.loanId}</Text></Text>
+    <TouchableOpacity style={styles.card}  onPress={HandleLoan}>
+      <Text style={styles.label}>Finance: <Text style={styles.value}>{item.loanId}</Text></Text>
       <Text style={styles.label}>Amount: <Text style={styles.value}>₹{item.loanAmount}</Text></Text>
       <Text style={styles.label}>Duration: <Text style={styles.value}>{item.loanDurationInMonth} months</Text></Text>
       <Text style={styles.label}>Status: <Text style={[styles.value, { color: item.loanStatus === 'Active' ? 'green' : 'red' }]}>{item.loanStatus}</Text></Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   value: {
-    fontWeight: '400',
+    fontWeight: '500',
     color: '#000',
   },
 });
