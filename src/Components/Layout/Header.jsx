@@ -1,12 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-import profilelogo from '../../Assets/profile.png';
 
 const Header = () => {
   return (
     <View style={styles.MainHeaderContainer}>
       <View style={styles.profileContainer}>
-        <Image source={profilelogo} style={styles.profileImage} />
+       <Text>Frofile</Text>
         <Text>Deepak yadav</Text>
       </View>
       <View style={styles.buttonContainer}>

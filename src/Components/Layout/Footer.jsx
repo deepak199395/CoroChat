@@ -1,46 +1,42 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import Home from "../../Assets/home.png";
-import Packege from "../../Assets/pockete.png";
-import saving from "../../Assets/save.png";
-import Options from "../../Assets/Options.png";
 import { useNavigation } from '@react-navigation/native';
 
 const Footer = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-  const handleHomeScreen=()=>{
-    navigation.navigate("home")
-  }
-  const handlePackegeScreen=()=>{
-    navigation.navigate("Packege")
+  const handleHomeScreen = () => {
+    navigation.navigate("home");
+  };
 
-  }
-  const handleSavigScreen=()=>{
-    navigation.navigate("Saving")
+  const handlePackegeScreen = () => {
+    navigation.navigate("Packege");
+  };
 
-  }
-  const handleOptionScreen=()=>{
-    navigation.navigate("Options")
+  const handleSavingScreen = () => {
+    navigation.navigate("Saving");
+  };
 
-  }
+  const handleOptionScreen = () => {
+    navigation.navigate("Options");
+  };
 
   return (
     <View style={styles.MainFooterContainer}>
       <TouchableOpacity style={styles.footerButton} onPress={handleHomeScreen}>
-        <Image source={Home} style={styles.iconStyle} />
+        <Text style={styles.footerText}>Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.footerButton} onPress={handlePackegeScreen}>
-        <Image source={Packege} style={styles.iconStyle} />
+        <Text style={styles.footerText}>Package</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.footerButton} onPress={handleSavigScreen}>
-        <Image source={saving} style={styles.iconStyle} />
+      <TouchableOpacity style={styles.footerButton} onPress={handleSavingScreen}>
+        <Text style={styles.footerText}>Saving</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.footerButton} onPress={handleOptionScreen}>
-        <Image source={Options} style={styles.iconStyle} />
+        <Text style={styles.footerText}>Options</Text>
       </TouchableOpacity>
     </View>
   );
@@ -61,7 +57,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    marginBottom: 0,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -75,9 +70,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#fff',
   },
-  iconStyle: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
+  footerText: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '600',
   },
 });

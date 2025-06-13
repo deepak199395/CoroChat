@@ -1,5 +1,6 @@
 npx @react-native-community/cli@latest init AwesomeProject
 npx react-native run-android
+npx react-native run-android --mode=release
 
 git init
 git add .
