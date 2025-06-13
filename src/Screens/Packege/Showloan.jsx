@@ -55,9 +55,7 @@ const Showloan = () => {
     </View>
   );
 };
-
 export default Showloan;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -25,7 +25,11 @@ const TotalAmount = () => {
     fetchLoans();
   }, []);
 
-  const totalLoanAmount = loanData.reduce((sum, item) => sum + item.loanAmount, 0);
+  // Safely parse and sum RemainingEmiAmmount
+  const totalLoanAmount = loanData.reduce((sum, item) => {
+    const amount = parseFloat(item.RemainingEmiAmmount) || 0;
+    return sum + amount;
+  }, 0);
 
   return (
     <View style={styles.container}>
@@ -33,7 +37,9 @@ const TotalAmount = () => {
         <ActivityIndicator size="large" color="#4CAF50" />
       ) : (
         <View style={styles.totalCard}>
-          <Text style={styles.totalText}>Total Loan Amount: ₹{totalLoanAmount}</Text>
+          <Text style={styles.totalText}>
+            Total Remaining EMI: ₹{totalLoanAmount.toFixed(2)}
+          </Text>
         </View>
       )}
     </View>
@@ -46,13 +52,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 10,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 25,
-    color: '#2E7D32',
+    justifyContent: 'center',
   },
   totalCard: {
     backgroundColor: '#E8F5E9',
