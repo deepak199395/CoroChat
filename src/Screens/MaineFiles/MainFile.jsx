@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const MainFile = () => {
   const navigation = useNavigation();
-  
+
   const [loanData, setLoanData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,22 +28,19 @@ const MainFile = () => {
     fetchLoans();
   }, []);
 
-   const handleLoan = (item) => {
-    navigation.navigate('DetailsLoanFile', { loan: item }); 
+  const handleLoan = (item) => {
+    navigation.navigate('DetailsLoanFile', { loan: item });
   };
 
 
   const renderLoanItem = ({ item }) => (
-    <TouchableOpacity style={styles.card}  onPress={() => handleLoan(item)}>
+    <TouchableOpacity style={styles.card} onPress={() => handleLoan(item)}>
       <Text style={styles.label}>Finance: <Text style={styles.value}>{item.loanId}</Text></Text>
       <Text style={styles.label}>Total Due: <Text style={styles.value}>₹{item.loanAmount}</Text></Text>
       <Text style={styles.label}>Remaining Due: <Text style={styles.value}>₹{item.RemainingEmiAmmount}</Text></Text>
-            <Text style={styles.label}>Duration: <Text style={styles.value}>{item.loanDurationInMonth} months</Text></Text>
-
-            <Text style={styles.label}>Remaining Months: <Text style={styles.value}>{item.RemainingEMInumber}</Text></Text>
-
-
-      <Text style={styles.label}>Status: <Text style={[styles.value, { color: item.loanStatus === 'Active' ? 'green' : 'red' }]}>{item.loanStatus}</Text></Text>
+      <Text style={styles.label}>Duration: <Text style={styles.value}>{item.loanDurationInMonth} months</Text></Text>
+     <Text style={styles.label}>Remaining Months: <Text style={styles.value}>{item.RemainingEMInumber}</Text></Text>
+     <Text style={styles.label}>Status: <Text style={[styles.value, { color: item.loanStatus === 'Active' ? 'green' : 'red' }]}>{item.loanStatus}</Text></Text>
     </TouchableOpacity>
   );
 

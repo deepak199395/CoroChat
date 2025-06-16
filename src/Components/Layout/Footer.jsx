@@ -1,6 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
+<FontAwesomeIcon name="money" size={30} color="green" />
 
 const Footer = () => {
   const navigation = useNavigation();
@@ -24,19 +30,20 @@ const Footer = () => {
   return (
     <View style={styles.MainFooterContainer}>
       <TouchableOpacity style={styles.footerButton} onPress={handleHomeScreen}>
-        <Text style={styles.footerText}>Home</Text>
+        <Icon name="home" size={30} color="#900" />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.footerButton} onPress={handlePackegeScreen}>
-        <Text style={styles.footerText}>Package</Text>
+        <FontAwesomeIcon name="money" size={30} color="green" />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.footerButton} onPress={handleSavingScreen}>
-        <Text style={styles.footerText}>Saving</Text>
+        <FontAwesome5Icon name="piggy-bank" size={30} color="green" />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.footerButton} onPress={handleOptionScreen}>
-        <Text style={styles.footerText}>Options</Text>
+        <MaterialIcon name="settings" size={30} color="#000" />
+
       </TouchableOpacity>
     </View>
   );

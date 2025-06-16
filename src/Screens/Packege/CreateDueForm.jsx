@@ -54,32 +54,30 @@ const CreateDueForm = () => {
             });
 
             const data = await response.json();
-            if (data.success) {
+            if (data?.success) {
                 Alert.alert("Success", "Loan Due Created Successfully", [
                     {
                         text: "Allow to submit details",
                         onPress: () => navigation.navigate("Showloan", { loan: data.data })
                     }
                 ]);
+                // Reset form
                 setFormData({
-                    loanId: "",
-                    loanAmount: "",
-                    loanStartDate: "",
-                    loanEndDate: "",
-                    loanDurationInMonth: "",
-                    loanInterestRate: "",
-                    loanStatus: "",
-                    loanPaymentStatus: "",
-                    loanPaymentMode: "",
-                    payedEMInumber: "",
-                    payedEMIAmount: "",
-                    RemainingEMInumber: "",
-                    EmiAmmount: "",
-                    RemainingEmiAmmount: ""
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    dob: "",
+                    occupation: "",
+                    workExperience: "",
+                    salary: "",
+                    currentfirm: "",
+                    address: ""
                 });
             } else {
-                Alert.alert("Failed", data.message || "Something went wrong");
+                console.log("Submission failed:", data);
+                Alert.alert("Error", data?.message || "Failed to submit loan due");
             }
+
         } catch (error) {
             console.error(error);
             Alert.alert("Error", "Failed to submit loan due");

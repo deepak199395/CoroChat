@@ -14,6 +14,7 @@ import Packege from '../Screens/Packege/Packege';
 import CreateDueForm from '../Screens/Packege/CreateDueForm';
 import Showloan from '../Screens/Packege/Showloan';
 import DetailsLoanFile from '../Screens/Packege/DetailsLoanFile';
+import UserProfile from '../Screens/Auth/UserProfile';
 
 
 const AppRounter = () => {
@@ -33,6 +34,7 @@ const AppRounter = () => {
                 <Stack.Screen name='CreateDueForm' component={CreateDueForm}/>
                 <Stack.Screen name='Showloan' component={Showloan}/>
                 <Stack.Screen name='DetailsLoanFile' component={DetailsLoanFile}/>
+                <Stack.Screen name='UserProfile' component={UserProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
 

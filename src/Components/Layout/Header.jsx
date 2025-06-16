@@ -1,19 +1,50 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Header = () => {
+    const [UserData, setUserData] = useState([]);
+    
+    const featchUserData=async()=> {
+        try {
+          const response =  await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getProfile/get-profile/api26")
+          const result = await response.json()
+          console.log("result",response);
+          
+          if(result.success){
+             setUserData(UserData)
+          }else{
+        console.log("Failed to fetch loans");
+          }
+        } catch (error) {
+      console.error("Error fetching loans:", error);
+
+        }finally{
+      setLoading(false);
+        }
+      }
+
+     useEffect(()=>{
+      featchUserData();
+     },[])
+
   return (
     <View style={styles.MainHeaderContainer}>
+      {/* Left side: Profile info */}
       <View style={styles.profileContainer}>
-       <Text>Frofile</Text>
-        <Text>Deepak yadav</Text>
+        <FontAwesome5Icon name="user-circle" size={30} color="#000" />
+        <Text style={styles.profileName}>Deepak Yadav</Text>
+        <MaterialIcon name="verified-user" size={22} color="green" />
       </View>
+
+      {/* Right side: user-alt + login icon */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Setting</Text>
+          <FontAwesome5Icon name="user-alt" size={28} color="#000" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+          <MaterialIcon name="login" size={30} color="#000" />
         </TouchableOpacity>
       </View>
     </View>
@@ -28,25 +59,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 60,
-    width:"98%",
+    width: "98%",
     paddingHorizontal: 15,
     backgroundColor: '#f0f0f0',
-    borderWidth: 1, 
+    borderWidth: 1,
     borderRadius: 10,
     borderColor: '#ccc',
-    marginTop:5,
-    marginLeft:5,   
-   },
+    marginTop: 5,
+    marginLeft: 5,
+  },
   profileContainer: {
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: 'center',
     alignItems: 'center',
-    gap:15
+    gap: 10,
   },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  profileName: {
+    fontSize: 16,
+    marginLeft: 8,
+    fontWeight: '600',
+    color: '#333',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -54,9 +86,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 5,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: 'Black',
   },
 });
