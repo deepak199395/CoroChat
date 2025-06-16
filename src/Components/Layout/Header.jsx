@@ -2,45 +2,58 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const Header = () => {
-    const [UserData, setUserData] = useState([]);
-    
-    const featchUserData=async()=> {
-        try {
-          const response =  await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getProfile/get-profile/api26")
-          const result = await response.json()
-          console.log("result",response);
-          
-          if(result.success){
-             setUserData(UserData)
-          }else{
-        console.log("Failed to fetch loans");
-          }
-        } catch (error) {
-      console.error("Error fetching loans:", error);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+    const navigation = useNavigation();
+  
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getProfile/get-profile/api26");
+      const result = await response.json();
+      console.log("Fetched result ===>", result);
 
-        }finally{
-      setLoading(false);
-        }
+      if (result.success) {
+        setUserData(result.ProfileDetails[0]);
+
+      } else {
+        console.log("Failed to fetch user profile");
       }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-     useEffect(()=>{
-      featchUserData();
-     },[])
+const HandleClickuser=()=>{
+   navigation.navigate('UserProfile')
+}
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <View style={styles.MainHeaderContainer}>
       {/* Left side: Profile info */}
       <View style={styles.profileContainer}>
         <FontAwesome5Icon name="user-circle" size={30} color="#000" />
-        <Text style={styles.profileName}>Deepak Yadav</Text>
+       <Text style={styles.profileName}>
+  {loading
+    ? "Loading..."
+    : userData
+    ? `${userData.firstName} ${userData.lastName}`
+    : "No Data"}
+</Text>
         <MaterialIcon name="verified-user" size={22} color="green" />
       </View>
 
       {/* Right side: user-alt + login icon */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={HandleClickuser}>
           <FontAwesome5Icon name="user-alt" size={28} color="#000" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
