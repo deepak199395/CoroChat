@@ -16,6 +16,8 @@ import Showloan from '../Screens/Packege/Showloan';
 import DetailsLoanFile from '../Screens/Packege/DetailsLoanFile';
 import UserProfile from '../Screens/Auth/UserProfile';
 import splashScreen from '../Screens/splashScreen';
+import DeallyExppess from '../Screens/Expenss/DeallyExppess';
+import ShoWexpances from '../Screens/Expenss/ShoWexpances';
 
 
 const AppRounter = () => {
@@ -37,6 +39,8 @@ const AppRounter = () => {
                 <Stack.Screen name='DetailsLoanFile' component={DetailsLoanFile}/>
                 <Stack.Screen name='UserProfile' component={UserProfile}/>
                 <Stack.Screen name='splashScreen' component={splashScreen} options={{headerShown:false}}/>
+                <Stack.Screen name='DeallyExppess' component={DeallyExppess}/>
+                <Stack.Screen name='ShoWexpances' component={ShoWexpances}/>
             </Stack.Navigator>
         </NavigationContainer>
 

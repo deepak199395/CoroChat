@@ -4,12 +4,15 @@ import Header from '../../Components/Layout/Header'
 import Footer from '../../Components/Layout/Footer'
 import MainFile from '../MaineFiles/MainFile'
 import TotalAmount from '../MaineFiles/TotalAmount'
+import DeallyExppess from '../Expenss/DeallyExppess'
+import TotalExpenses from '../Expenss/TotalExpenses'
 
 const Home = () => {
   return (
     <View style={styles.container}>
      <Header/>
      <TotalAmount/>
+     <TotalExpenses/>
      <MainFile/>
      <Footer/>
     </View>
