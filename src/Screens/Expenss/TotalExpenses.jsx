@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity } from 'rea
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const TotalExpenses = () => {
+const TotalExpenses = ({ reload }) => {
   const navigation = useNavigation();
 
   const [total, setTotal] = useState(0);
@@ -28,10 +28,12 @@ const TotalExpenses = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchTotalExpenses();
-  }, []);
+  }, [reload]);
+  useEffect(() => {
+    fetchTotalExpenses();
+  }, [reload]);
 
   const handleShowExpense = () => {
     navigation.navigate('ShoWexpances');
@@ -70,11 +72,11 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 130,
     borderRadius: 10,
-    elevation: 3, 
-    shadowColor: '#000', 
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3, 
-    shadowRadius: 3, 
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
   },
   totalText: {
     fontSize: 22,

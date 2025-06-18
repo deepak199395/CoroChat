@@ -4,11 +4,11 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 
-const Header = () => {
+const Header = ({ onReload }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-    const navigation = useNavigation();
-  
+  const navigation = useNavigation();
+
   const fetchUserData = async () => {
     try {
       const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getProfile/get-profile/api26");
@@ -17,7 +17,6 @@ const Header = () => {
 
       if (result.success) {
         setUserData(result.ProfileDetails[0]);
-
       } else {
         console.log("Failed to fetch user profile");
       }
@@ -28,9 +27,9 @@ const Header = () => {
     }
   };
 
-const HandleClickuser=()=>{
-   navigation.navigate('UserProfile')
-}
+  const HandleClickuser = () => {
+    navigation.navigate('UserProfile');
+  };
 
   useEffect(() => {
     fetchUserData();
@@ -41,21 +40,27 @@ const HandleClickuser=()=>{
       {/* Left side: Profile info */}
       <View style={styles.profileContainer}>
         <FontAwesome5Icon name="user-circle" size={30} color="#000" />
-       <Text style={styles.profileName}>
-  {loading
-    ? "Loading..."
-    : userData
-    ? `${userData.firstName} ${userData.lastName}`
-    : "No Data"}
-</Text>
+        <Text style={styles.profileName}>
+          {loading
+            ? "Loading..."
+            : userData
+            ? `${userData.firstName} ${userData.lastName}`
+            : "No Data"}
+        </Text>
         <MaterialIcon name="verified-user" size={22} color="green" />
       </View>
 
-      {/* Right side: user-alt + login icon */}
+      {/* Right side: Action buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={HandleClickuser}>
           <FontAwesome5Icon name="user-alt" size={28} color="#000" />
         </TouchableOpacity>
+
+        {/* 🔁 Reload button */}
+        <TouchableOpacity style={styles.button} onPress={onReload}>
+          <MaterialIcon name="refresh" size={28} color="#000" />
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button}>
           <MaterialIcon name="login" size={30} color="#000" />
         </TouchableOpacity>
