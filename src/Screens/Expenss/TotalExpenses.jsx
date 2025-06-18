@@ -57,13 +57,13 @@ export default TotalExpenses;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 10,
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 0,
   },
   button: {
     backgroundColor: '#E8F5E9',
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 3, 
     shadowColor: '#000', 
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3, 
     shadowRadius: 3, 
   },
   totalText: {
-    fontSize: 24,
+    fontSize: 22,
     color: '#1B5E20',
     fontWeight: 'bold',
   },
