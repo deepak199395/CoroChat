@@ -10,6 +10,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const DailyExpenseTracker = () => {
   const [amount, setAmount] = useState('');
@@ -17,8 +18,10 @@ const DailyExpenseTracker = () => {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editId, setEditId] = useState(null);
 
-  const descriptionOptions = ['Food', 'Petrol','Medicine ','Drink', 'Breakfast', 'EMI','Travel','grocery','shopping'];
+  const descriptionOptions = ['Food', 'Petrol', 'Medicine ', 'Drink', 'Breakfast', 'EMI', 'Travel', 'grocery', 'shopping'];
 
   const getToday = () => {
     const today = new Date();
@@ -28,9 +31,7 @@ const DailyExpenseTracker = () => {
   const fetchExpenses = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getExpress/get-Express/api28'
-      );
+      const response = await fetch('https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getExpress/get-Express/api28');
       const result = await response.json();
       if (result.success && result.data) {
         setExpenses(result.data);
@@ -42,39 +43,68 @@ const DailyExpenseTracker = () => {
     }
   };
 
-  const handleAddExpense = async () => {
+  const handleAddOrUpdateExpense = async () => {
     if (!amount || !desc) return Alert.alert('Please fill all fields');
 
-    const newExpense = {
+    const expenseData = {
       DayAmmount: amount,
       date: getToday(),
       description: desc,
     };
 
     try {
-      const response = await fetch(
-        'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/createEexpess/Create-Express/api27',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newExpense),
-        }
-      );
+      const url = editMode
+        ? `https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/putDeallyExpess/put-dellyExpensess/api29/${editId}`
+        : 'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/createEexpess/Create-Express/api27';
+
+      const method = editMode ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expenseData),
+      });
 
       const result = await response.json();
       if (result.success) {
         setAmount('');
         setDesc('');
+        setEditMode(false);
+        setEditId(null);
         fetchExpenses();
       } else {
-        Alert.alert('Failed to add expense');
+        Alert.alert('Failed to save expense');
       }
     } catch (error) {
-      console.log('Error creating expense:', error);
+      console.log('Error saving expense:', error);
       Alert.alert('Server error');
     }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/deleteDeallyExpess//put-dellyExpenses/api30/${id}`, {
+        method: 'DELETE',
+      });
+      const result = await response.json();
+      if (result.success) {
+        fetchExpenses();
+      } else {
+        Alert.alert('Delete failed');
+      }
+    } catch (error) {
+      console.log('Error deleting expense:', error);
+      Alert.alert('Server error');
+    }
+  };
+
+  const handleEdit = (item) => {
+    setAmount(item.DayAmmount);
+    setDesc(item.description);
+    setEditId(item._id);
+    setEditMode(true);
   };
 
   useEffect(() => {
@@ -107,8 +137,8 @@ const DailyExpenseTracker = () => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleAddExpense} style={styles.button}>
-        <Text style={styles.buttonText}>Add Expense</Text>
+      <TouchableOpacity onPress={handleAddOrUpdateExpense} style={styles.button}>
+        <Text style={styles.buttonText}>{editMode ? 'Update Expense' : 'Add Expense'}</Text>
       </TouchableOpacity>
 
       <Text style={styles.totalText}>
@@ -120,13 +150,22 @@ const DailyExpenseTracker = () => {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <View style={styles.expenseItem}>
-            <Text style={styles.expenseDesc}>{item.description}</Text>
-            <Text style={styles.expenseAmt}>₹{item.DayAmmount}</Text>
+            <View>
+              <Text style={styles.expenseDesc}>{item.description}</Text>
+              <Text style={styles.expenseAmt}>₹{item.DayAmmount}</Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity onPress={() => handleEdit(item)}>
+                <Icon name="edit" size={22} color="blue" style={{ marginHorizontal: 8 }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleDelete(item._id)}>
+                <Icon name="delete" size={22} color="red" />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
 
-      {/* Description Modal */}
       <Modal
         visible={modalVisible}
         transparent

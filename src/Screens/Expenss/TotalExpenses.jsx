@@ -66,19 +66,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#27ae60',
+    backgroundColor: '#E8F5E9',
     paddingVertical: 14,
-    paddingHorizontal: 30,
+    paddingHorizontal: 130,
     borderRadius: 10,
-    elevation: 3, // Android shadow
-    shadowColor: '#000', // iOS shadow
-    shadowOffset: { width: 0, height: 2 }, // iOS
-    shadowOpacity: 0.3, // iOS
-    shadowRadius: 3, // iOS
+    elevation: 3, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3, 
+    shadowRadius: 3, 
   },
   totalText: {
     fontSize: 24,
-    color: '#fff',
+    color: '#1B5E20',
     fontWeight: 'bold',
   },
 });

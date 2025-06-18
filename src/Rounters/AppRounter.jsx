@@ -18,6 +18,16 @@ import UserProfile from '../Screens/Auth/UserProfile';
 import splashScreen from '../Screens/splashScreen';
 import DeallyExppess from '../Screens/Expenss/DeallyExppess';
 import ShoWexpances from '../Screens/Expenss/ShoWexpances';
+import DashBoard from '../DASHBORD/DashBoard';
+import Appsetting from '../Screens/Options/Appsetting';
+import Documents from '../Screens/Options/Documents';
+import ITR from '../Screens/Options/ITR';
+import Expenses from '../Screens/Options/Expenses';
+import LoanRecord from '../Screens/Options/LoanRecord';
+import BankDetails from '../Screens/Options/BankDetails';
+import SIP from '../Screens/Options/SIP';
+import Legal from '../Screens/Options/Legal';
+import NetWorthTracker from '../Screens/Options/NetWorthTracker';
 
 
 const AppRounter = () => {
@@ -41,6 +51,16 @@ const AppRounter = () => {
                 <Stack.Screen name='splashScreen' component={splashScreen} options={{headerShown:false}}/>
                 <Stack.Screen name='DeallyExppess' component={DeallyExppess}/>
                 <Stack.Screen name='ShoWexpances' component={ShoWexpances}/>
+                <Stack.Screen name='DashBoard' component={DashBoard}/>
+                <Stack.Screen name='Appsetting' component={Appsetting}/>
+                <Stack.Screen name='Documents' component={Documents}/>
+                <Stack.Screen name='ITR' component={ITR}/>
+                <Stack.Screen name='Expenses' component={Expenses}/>
+                <Stack.Screen name='LoanRecord' component={LoanRecord}/>
+                <Stack.Screen name='BankDetails' component={BankDetails}/>
+                <Stack.Screen name='SIP' component={SIP}/>
+                <Stack.Screen name='NetWorthTracker' component={NetWorthTracker}/>
+                <Stack.Screen name='Legal' component={Legal}/>
             </Stack.Navigator>
         </NavigationContainer>
 
