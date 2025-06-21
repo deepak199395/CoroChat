@@ -9,6 +9,7 @@ const Options = () => {
 
   const menuOptions = [
     { label: 'Dashboard', screen: 'DashBoard', icon: 'view-dashboard-outline' },
+    { label: 'Bill Slid', screen: 'BillSlid', icon: 'view-dashboard-outline' },
     { label: 'Documents', screen: 'Documents', icon: 'file-document-outline' },
     { label: 'Expenses', screen: 'Expenses', icon: 'currency-inr' },
     { label: 'Loan Records', screen: 'LoanRecord', icon: 'file-cabinet' },

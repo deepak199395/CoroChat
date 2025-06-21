@@ -28,6 +28,7 @@ import BankDetails from '../Screens/Options/BankDetails';
 import SIP from '../Screens/Options/SIP';
 import Legal from '../Screens/Options/Legal';
 import NetWorthTracker from '../Screens/Options/NetWorthTracker';
+import BillSlid from '../Components/Layout/BillSplid/BillSlid';
 
 
 const AppRounter = () => {
@@ -61,6 +62,7 @@ const AppRounter = () => {
                 <Stack.Screen name='SIP' component={SIP}/>
                 <Stack.Screen name='NetWorthTracker' component={NetWorthTracker}/>
                 <Stack.Screen name='Legal' component={Legal}/>
+                <Stack.Screen name='BillSlid' component={BillSlid}/>
             </Stack.Navigator>
         </NavigationContainer>
 

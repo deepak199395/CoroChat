@@ -6,6 +6,7 @@ import MainFile from '../MaineFiles/MainFile';
 import TotalAmount from '../MaineFiles/TotalAmount';
 import DeallyExppess from '../Expenss/DeallyExppess';
 import TotalExpenses from '../Expenss/TotalExpenses';
+import BillSlid from '../../Components/Layout/BillSplid/BillSlid';
 
 const Home = () => {
   const [reload, setReload] = useState(false);
