@@ -29,14 +29,12 @@ import SIP from '../Screens/Options/SIP';
 import Legal from '../Screens/Options/Legal';
 import NetWorthTracker from '../Screens/Options/NetWorthTracker';
 import BillSlid from '../Components/Layout/BillSplid/BillSlid';
-
-
 const AppRounter = () => {
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='splashScreen'>
-                <Stack.Screen name='home' component={Home} options={{headerShown:false}} />
+            <Stack.Navigator initialRouteName='LoginScreen'>
+                <Stack.Screen name='home' component={Home} options={{headerShown:false}}/>
                 <Stack.Screen name='header' component={Header}/>
                 <Stack.Screen name='footer' component={Footer}/>
                 <Stack.Screen name='Saving' component={Saving}/>
@@ -65,10 +63,7 @@ const AppRounter = () => {
                 <Stack.Screen name='BillSlid' component={BillSlid}/>
             </Stack.Navigator>
         </NavigationContainer>
-
-    )
+ )
 }
-
 export default AppRounter
-
 const styles = StyleSheet.create({})

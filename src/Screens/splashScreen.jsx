@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('home'); 
+      navigation.replace('LoginScreen'); 
     }, 3000); 
 
     return () => clearTimeout(timer);

@@ -4,90 +4,106 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    dob: "",
-    occupation: "",
-    workExperience: "",
-    salary: "",
-    currentfirm: "",
-    address: ""
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    gender: '',
+    age: '',
+    citizenship: '',
+    address: '',
+    role: 'user',
   });
-   const handleChange = (field, value) => {
+
+  const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
-   const handleSubmit = async () => {
-    try {
-      const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/profileDetails/Create-Profile/api25",{
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-     const data = await response.json();
-     console.log(data);
-     
-      if (data.success) {
-        Alert.alert("Success", "Loan Due Created Successfully", [
+
+  const handleSubmit = async () => {
+    // basic validation
+    const {
+      name,
+      email,
+      password,
+      phone,
+      gender,
+      age,
+      address,
+    } = formData;
+
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !phone ||
+      !gender ||
+      !age ||
+      !address
+    ) {
+      Alert.alert('Validation Error', 'Please fill all required fields');
+      return;
+    }
+try {
+      const response = await fetch(
+        'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/createcoroUser/Create-CoroUser/api31',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.flage === 'Y') {
+        Alert.alert('Success', 'User registered successfully', [
           {
-            text: "Allow to submit details",
-            onPress: () => navigation.navigate("UserProfile", { loan: data.data })
-          }
+            text: 'Go to Login',
+            onPress: () => navigation.navigate('LoginScreen'),
+          },
         ]);
         setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          dob: "",
-          occupation: "",
-          workExperience: "",
-          salary: "",
-          currentfirm: "",
-          address: ""
+          name: '',
+          email: '',
+          password: '',
+          phone: '',
+          gender: '',
+          age: '',
+          citizenship: '',
+          address: '',
+          role: 'user',
         });
       } else {
-        Alert.alert("Error", "Failed to submit User Details");
+        Alert.alert('Error', data.message || 'Registration failed');
       }
     } catch (error) {
-      Alert.alert("Error", "Something went wrong");
       console.error(error);
+      Alert.alert('Error', 'Something went wrong');
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Register your self</Text>
+      <Text style={styles.title}>Create Account</Text>
 
       <TextInput
         style={styles.input}
-        placeholder=" Name"
+        placeholder="Full Name"
         placeholderTextColor="#666"
-        value={formData.firstName}
-        onChangeText={(text) => handleChange('firstName', text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name"
-        placeholderTextColor="#666"
-        value={formData.lastName}
-        onChangeText={(text) => handleChange('lastName', text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="DOB (YYYY-MM-DD)"
-        placeholderTextColor="#666"
-        value={formData.dob}
-        onChangeText={(text) => handleChange('dob', text)}
+        value={formData.name}
+        onChangeText={(text) => handleChange('name', text)}
       />
       <TextInput
         style={styles.input}
@@ -95,36 +111,46 @@ const RegisterScreen = () => {
         placeholderTextColor="#666"
         value={formData.email}
         onChangeText={(text) => handleChange('email', text)}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
-        placeholder="Occupations"
+        placeholder="Password"
         placeholderTextColor="#666"
-        value={formData.occupation}
-        onChangeText={(text) => handleChange('occupation', text)}
+        value={formData.password}
+        onChangeText={(text) => handleChange('password', text)}
+        secureTextEntry
+      />
+     <TextInput
+        style={styles.input}
+        placeholder="Phone Number"
+        placeholderTextColor="#666"
+        value={formData.phone}
+        onChangeText={(text) => handleChange('phone', text)}
+        keyboardType="phone-pad"
       />
       <TextInput
         style={styles.input}
-        placeholder="Work Experince"
-        keyboardType="numeric"
+        placeholder="Gender"
         placeholderTextColor="#666"
-        value={formData.workExperience}
-        onChangeText={(text) => handleChange('workExperience', text)}
+        value={formData.gender}
+        onChangeText={(text) => handleChange('gender', text)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Monthly Salary"
-        keyboardType="numeric"
+        placeholder="Age"
         placeholderTextColor="#666"
-        value={formData.salary}
-        onChangeText={(text) => handleChange('salary', text)}
+        value={formData.age}
+        onChangeText={(text) => handleChange('age', text)}
+        keyboardType="number-pad"
       />
       <TextInput
         style={styles.input}
-        placeholder="Current Working Firm Name"
+        placeholder="Citizenship"
         placeholderTextColor="#666"
-        value={formData.currentfirm}
-        onChangeText={(text) => handleChange('currentfirm', text)}
+        value={formData.citizenship}
+        onChangeText={(text) => handleChange('citizenship', text)}
       />
       <TextInput
         style={styles.input}
@@ -133,11 +159,8 @@ const RegisterScreen = () => {
         value={formData.address}
         onChangeText={(text) => handleChange('address', text)}
       />
-
-      {/* Upload Image feature can go here later */}
-
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitText}>Submit</Text>
+        <Text style={styles.submitText}>Register</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -152,7 +175,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     color: '#0a3d62',
     marginBottom: 25,
@@ -164,27 +187,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 16,
     backgroundColor: '#ffffff',
     color: '#333',
-  },
-  uploadButton: {
-    backgroundColor: '#2980b9',
-    padding: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  uploadText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  imagePreview: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 15,
   },
   submitButton: {
     backgroundColor: '#16a085',
