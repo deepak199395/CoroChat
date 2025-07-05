@@ -37,13 +37,14 @@ const LoginScreen = ({ navigation }) => {
       const data = await response.json();
       setLoading(false);
 
-      if (response.ok) {
-        // Save full user data
+      if (response.ok && data.success) {
         await AsyncStorage.setItem('user', JSON.stringify(data.user));
+        await AsyncStorage.setItem('token', data.token);
+
         Alert.alert('Login Success', 'You are logged in!');
         setEmail('');
         setPassword('');
-        navigation.navigate('UserProfile'); // No need to pass anything
+        navigation.replace('home'); // go to loan list
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid credentials');
       }

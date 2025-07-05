@@ -14,6 +14,7 @@ const CreateDueForm = () => {
     const navigation = useNavigation();
     const [formData, setFormData] = useState({
         loanId: "",
+        email:"",
         loanAmount: "",
         loanStartDate: "",
         loanEndDate: "",
@@ -90,37 +91,53 @@ const CreateDueForm = () => {
 
             <TextInput style={styles.input} placeholder="Finance Company Name" placeholderTextColor="#666"
                 value={formData.loanId} onChangeText={(text) => handleChange('loanId', text)} />
+
+            <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#666"
+                value={formData.email} onChangeText={(text) => handleChange('email', text)} />
+
             <TextInput style={styles.input} placeholder="Total Loan Amount" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.loanAmount}
                 onChangeText={(text) => handleChange('loanAmount', text)} />
+
             <TextInput style={styles.input} placeholder="Start Date (YYYY-MM-DD)" placeholderTextColor="#666"
                 value={formData.loanStartDate} onChangeText={(text) => handleChange('loanStartDate', text)} />
+
             <TextInput style={styles.input} placeholder="End Date (YYYY-MM-DD)" placeholderTextColor="#666"
                 value={formData.loanEndDate} onChangeText={(text) => handleChange('loanEndDate', text)} />
+
             <TextInput style={styles.input} placeholder="Loan Duration (in months)" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.loanDurationInMonth}
                 onChangeText={(text) => handleChange('loanDurationInMonth', text)} />
+
             <TextInput style={styles.input} placeholder="Interest Rate (%)" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.loanInterestRate}
                 onChangeText={(text) => handleChange('loanInterestRate', text)} />
+
             <TextInput style={styles.input} placeholder="Loan Status (e.g. Active)" placeholderTextColor="#666"
                 value={formData.loanStatus} onChangeText={(text) => handleChange('loanStatus', text)} />
+
             <TextInput style={styles.input} placeholder="Payment Status (e.g. Pending)" placeholderTextColor="#666"
                 value={formData.loanPaymentStatus} onChangeText={(text) => handleChange('loanPaymentStatus', text)} />
+
             <TextInput style={styles.input} placeholder="Payment Mode (e.g. EMI)" placeholderTextColor="#666"
                 value={formData.loanPaymentMode} onChangeText={(text) => handleChange('loanPaymentMode', text)} />
+
             <TextInput style={styles.input} placeholder="Paid EMI Count" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.payedEMInumber}
                 onChangeText={(text) => handleChange('payedEMInumber', text)} />
+
             <TextInput style={styles.input} placeholder="Paid EMI Amount" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.payedEMIAmount}
                 onChangeText={(text) => handleChange('payedEMIAmount', text)} />
+
             <TextInput style={styles.input} placeholder="Remaining EMI Count" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.RemainingEMInumber}
                 onChangeText={(text) => handleChange('RemainingEMInumber', text)} />
+
             <TextInput style={styles.input} placeholder="Monthly EMI Amount" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.EmiAmmount}
                 onChangeText={(text) => handleChange('EmiAmmount', text)} />
+
             <TextInput style={styles.input} placeholder="Remaining EMI Amount" keyboardType="numeric"
                 placeholderTextColor="#666" value={formData.RemainingEmiAmmount}
                 onChangeText={(text) => handleChange('RemainingEmiAmmount', text)} />
