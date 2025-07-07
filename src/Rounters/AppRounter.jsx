@@ -41,8 +41,8 @@ const AppRounter = () => {
                 <Stack.Screen name='Options' component={Options}/>
                 <Stack.Screen name='Packege' component={Packege}/>
                 <Stack.Screen name='Setting' component={Setting}/>
-                <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-                <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
+                <Stack.Screen name='LoginScreen' component={LoginScreen} options={{headerShown:false}}/>
+                <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{headerShown:false}}/>
                 <Stack.Screen name='CreateDueForm' component={CreateDueForm}/>
                 <Stack.Screen name='Showloan' component={Showloan}/>
                 <Stack.Screen name='DetailsLoanFile' component={DetailsLoanFile}/>

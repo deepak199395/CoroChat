@@ -4,7 +4,8 @@ import {
   View,
   ActivityIndicator,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,40 +15,39 @@ const UserProfile = ({ navigation }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
- const fetchUserDetails = async () => {
-  setLoading(true);
-  try {
-    const storedUser = await AsyncStorage.getItem('user');
-    if (!storedUser) {
-      Alert.alert("Error", "No user data found in storage");
-      setLoading(false);
-      return;
-    }
-
-    const parsedUser = JSON.parse(storedUser);
-
-    const response = await fetch(
-      'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getcoroUser/get-CoroUser/api32'
-    );
-    const json = await response.json();
-
-    if (json.flage === "Y") {
-      const matchedUser = json.data.find(u => u.email === parsedUser.email);
-      if (matchedUser) {
-        setUserDetails(matchedUser);
-      } else {
-        Alert.alert("User not found in API response");
+  const fetchUserDetails = async () => {
+    setLoading(true);
+    try {
+      const storedUser = await AsyncStorage.getItem('user');
+      if (!storedUser) {
+        Alert.alert("Error", "No user data found in storage");
+        setLoading(false);
+        return;
       }
-    } else {
-      Alert.alert("Error", "Failed to fetch users");
-    }
-  } catch (err) {
-    Alert.alert("Error", "Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
 
+      const parsedUser = JSON.parse(storedUser);
+
+      const response = await fetch(
+        'https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/getcoroUser/get-CoroUser/api32'
+      );
+      const json = await response.json();
+
+      if (json.flage === "Y") {
+        const matchedUser = json.data.find(u => u.email === parsedUser.email);
+        if (matchedUser) {
+          setUserDetails(matchedUser);
+        } else {
+          Alert.alert("User not found in API response");
+        }
+      } else {
+        Alert.alert("Error", "Failed to fetch users");
+      }
+    } catch (err) {
+      Alert.alert("Error", "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchUserDetails();
@@ -62,7 +62,7 @@ const UserProfile = ({ navigation }) => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#007bff" />
+        <ActivityIndicator size="large" color="#16a085" />
       </View>
     );
   }
@@ -79,84 +79,114 @@ const UserProfile = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>User Profile</Text>
-      <Text style={styles.label}>Name: <Text style={styles.value}>{userDetails.name}</Text></Text>
-      <Text style={styles.label}>Email: <Text style={styles.value}>{userDetails.email}</Text></Text>
-      <Text style={styles.label}>Phone: <Text style={styles.value}>{userDetails.phone}</Text></Text>
-      <Text style={styles.label}>Gender: <Text style={styles.value}>{userDetails.gender}</Text></Text>
-      <Text style={styles.label}>Age: <Text style={styles.value}>{userDetails.age}</Text></Text>
-      <Text style={styles.label}>Address: <Text style={styles.value}>{userDetails.address}</Text></Text>
+    <View style={styles.page}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>👤 Your Profile</Text>
 
-      <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-     <View style={styles.footer}>
-        <Footer  />
-     </View>
-      
+        <View style={styles.card}>
+          <Text style={styles.label}>Full Name</Text>
+          <Text style={styles.value}>{userDetails.name}</Text>
+
+          <Text style={styles.label}>Email</Text>
+          <Text style={styles.value}>{userDetails.email}</Text>
+
+          <Text style={styles.label}>Phone</Text>
+          <Text style={styles.value}>{userDetails.phone}</Text>
+
+          <Text style={styles.label}>Gender</Text>
+          <Text style={styles.value}>{userDetails.gender}</Text>
+
+          <Text style={styles.label}>Age</Text>
+          <Text style={styles.value}>{userDetails.age}</Text>
+
+          <Text style={styles.label}>City</Text>
+          <Text style={styles.value}>{userDetails.address}</Text>
+        </View>
+
+        <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
+          <Text style={styles.logoutText}>🚪 Logout</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <Footer />
+      </View>
     </View>
   );
 };
 
 export default UserProfile;
-
 const styles = StyleSheet.create({
-  container: {
+  page: {
     flex: 1,
+    backgroundColor: '#ecf0f3',
+  },
+  container: {
     padding: 24,
-    backgroundColor: '#f5f5f5',
+    paddingBottom: 80,
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
-    color: '#333',
+    color: '#2c3e50',
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 20,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
   },
   label: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginTop: 12,
+    fontSize: 16,
+    fontWeight: '700',
     color: '#555',
+    marginTop: 12,
   },
   value: {
-    fontWeight: '400',
-    color: '#000',
+    fontSize: 16,
+    color: '#2d3436',
+    marginTop: 4,
   },
   loaderContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ecf0f3',
   },
   retryBtn: {
     marginTop: 20,
-    padding: 12,
-    backgroundColor: '#007bff',
-    borderRadius: 8,
+    padding: 14,
+    backgroundColor: '#2980b9',
+    borderRadius: 10,
     alignItems: 'center',
   },
   retryText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
   },
   logoutBtn: {
     marginTop: 30,
-    padding: 12,
-    backgroundColor: '#ff4444',
-    borderRadius: 8,
+    paddingVertical: 15,
+    backgroundColor: '#e74c3c',
+    borderRadius: 12,
     alignItems: 'center',
+    elevation: 3,
   },
   logoutText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  footer:{
-    width:"120%",
-    flex:1,
+  footer: {
+    width: '100%',
     position: 'absolute',
     bottom: 0,
-  }
-  
+  },
 });

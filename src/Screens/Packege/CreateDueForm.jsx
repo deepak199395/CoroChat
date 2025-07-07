@@ -1,189 +1,269 @@
 import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    TouchableOpacity,
-    ScrollView,
-    Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  Platform,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import * as DateTimePicker from '@react-native-community/datetimepicker';
+import RNPickerSelect from 'react-native-picker-select';
+//mport * as DateTimePicker from '@react-native-community/datetimepicker';
+//import DateTimePicker from '@react-native-community/datetimepicker';
 
 const CreateDueForm = () => {
-    const navigation = useNavigation();
-    const [formData, setFormData] = useState({
-        loanId: "",
-        email:"",
-        loanAmount: "",
-        loanStartDate: "",
-        loanEndDate: "",
-        loanDurationInMonth: "",
-        loanInterestRate: "",
-        loanStatus: "",
-        loanPaymentStatus: "",
-        loanPaymentMode: "",
-        payedEMInumber: "",
-        payedEMIAmount: "",
-        RemainingEMInumber: "",
-        EmiAmmount: "",
-        RemainingEmiAmmount: ""
-    });
+  const navigation = useNavigation();
 
-    const handleChange = (key, value) => {
-        setFormData({ ...formData, [key]: value });
-    };
+  const [formData, setFormData] = useState({
+    loanId: '',
+    email: '',
+    loanAmount: '',
+    loanStartDate: '',
+    loanEndDate: '',
+    loanDurationInMonth: '',
+    loanInterestRate: '',
+    loanStatus: '',
+    loanPaymentStatus: '',
+    loanPaymentMode: '',
+    payedEMInumber: '',
+    payedEMIAmount: '',
+    RemainingEMInumber: '',
+    EmiAmmount: '',
+    RemainingEmiAmmount: ''
+  });
 
-    const handleSubmit = async () => {
-        try {
-            const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/loans/Create-LoanDue/api22", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    loanAmount: parseFloat(formData.loanAmount),
-                    loanDurationInMonth: parseInt(formData.loanDurationInMonth),
-                    loanInterestRate: parseFloat(formData.loanInterestRate),
-                    payedEMInumber: parseInt(formData.payedEMInumber),
-                    payedEMIAmount: parseFloat(formData.payedEMIAmount),
-                    RemainingEMInumber: parseInt(formData.RemainingEMInumber),
-                    EmiAmmount: parseFloat(formData.EmiAmmount),
-                    RemainingEmiAmmount: parseFloat(formData.RemainingEmiAmmount),
-                }),
-            });
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
-            const data = await response.json();
-            if (data?.success) {
-                Alert.alert("Success", "Loan Due Created Successfully", [
-                    {
-                        text: "Allow to submit details",
-                        onPress: () => navigation.navigate("Showloan", { loan: data.data })
-                    }
-                ]);
-                // Reset form
-                setFormData({
-                    firstName: "",
-                    lastName: "",
-                    email: "",
-                    dob: "",
-                    occupation: "",
-                    workExperience: "",
-                    salary: "",
-                    currentfirm: "",
-                    address: ""
-                });
-            } else {
-                console.log("Submission failed:", data);
-                Alert.alert("Error", data?.message || "Failed to submit loan due");
-            }
+  const handleChange = (key, value) => {
+    setFormData({ ...formData, [key]: value });
+  };
 
-        } catch (error) {
-            console.error(error);
-            Alert.alert("Error", "Failed to submit loan due");
-        }
-    };
+  const handleDateChange = (event, selectedDate, key) => {
+    const currentDate = selectedDate || formData[key];
+    if (Platform.OS === 'android') {
+      key === 'loanStartDate'
+        ? setShowStartDatePicker(false)
+        : setShowEndDatePicker(false);
+    }
+    const formatted = new Date(currentDate).toISOString().split('T')[0];
+    handleChange(key, formatted);
+  };
 
-    return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Create Loan Due</Text>
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/loans/Create-LoanDue/api22", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          loanAmount: parseFloat(formData.loanAmount),
+          loanDurationInMonth: parseInt(formData.loanDurationInMonth),
+          loanInterestRate: parseFloat(formData.loanInterestRate),
+          payedEMInumber: parseInt(formData.payedEMInumber),
+          payedEMIAmount: parseFloat(formData.payedEMIAmount),
+          RemainingEMInumber: parseInt(formData.RemainingEMInumber),
+          EmiAmmount: parseFloat(formData.EmiAmmount),
+          RemainingEmiAmmount: parseFloat(formData.RemainingEmiAmmount),
+        })
+      });
 
-            <TextInput style={styles.input} placeholder="Finance Company Name" placeholderTextColor="#666"
-                value={formData.loanId} onChangeText={(text) => handleChange('loanId', text)} />
+      const data = await response.json();
 
-            <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#666"
-                value={formData.email} onChangeText={(text) => handleChange('email', text)} />
+      if (data?.success) {
+        Alert.alert("Success", "Loan Due Created Successfully", [
+          {
+            text: "View Loan",
+            onPress: () => navigation.navigate("Showloan", { loan: data.data })
+          }
+        ]);
+        setFormData({
+          loanId: '',
+          email: '',
+          loanAmount: '',
+          loanStartDate: '',
+          loanEndDate: '',
+          loanDurationInMonth: '',
+          loanInterestRate: '',
+          loanStatus: '',
+          loanPaymentStatus: '',
+          loanPaymentMode: '',
+          payedEMInumber: '',
+          payedEMIAmount: '',
+          RemainingEMInumber: '',
+          EmiAmmount: '',
+          RemainingEmiAmmount: ''
+        });
+      } else {
+        Alert.alert("Error", data?.message || "Submission failed");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Something went wrong");
+    }
+  };
 
-            <TextInput style={styles.input} placeholder="Total Loan Amount" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.loanAmount}
-                onChangeText={(text) => handleChange('loanAmount', text)} />
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>🎯 Create Loan Due</Text>
 
-            <TextInput style={styles.input} placeholder="Start Date (YYYY-MM-DD)" placeholderTextColor="#666"
-                value={formData.loanStartDate} onChangeText={(text) => handleChange('loanStartDate', text)} />
+      {[
+        { key: 'loanId', label: 'Finance Company Name' },
+        { key: 'email', label: 'Email' },
+        { key: 'loanAmount', label: 'Loan Amount', keyboardType: 'numeric' },
+        { key: 'loanDurationInMonth', label: 'Loan Duration (Months)', keyboardType: 'numeric' },
+        { key: 'loanInterestRate', label: 'Interest Rate (%)', keyboardType: 'numeric' },
+        { key: 'payedEMInumber', label: 'Paid EMI Count', keyboardType: 'numeric' },
+        { key: 'payedEMIAmount', label: 'Paid EMI Amount', keyboardType: 'numeric' },
+        { key: 'RemainingEMInumber', label: 'Remaining EMI Count', keyboardType: 'numeric' },
+        { key: 'EmiAmmount', label: 'Monthly EMI Amount', keyboardType: 'numeric' },
+        { key: 'RemainingEmiAmmount', label: 'Remaining EMI Amount', keyboardType: 'numeric' },
+      ].map((input) => (
+        <TextInput
+          key={input.key}
+          style={styles.input}
+          placeholder={input.label}
+          placeholderTextColor="#888"
+          keyboardType={input.keyboardType || 'default'}
+          value={formData[input.key]}
+          onChangeText={(text) => handleChange(input.key, text)}
+        />
+      ))}
 
-            <TextInput style={styles.input} placeholder="End Date (YYYY-MM-DD)" placeholderTextColor="#666"
-                value={formData.loanEndDate} onChangeText={(text) => handleChange('loanEndDate', text)} />
+      {/* Start Date */}
+      <TouchableOpacity style={styles.input} onPress={() => setShowStartDatePicker(true)}>
+        <Text style={{ color: formData.loanStartDate ? '#000' : '#999' }}>
+          {formData.loanStartDate || '📅 Select Start Date'}
+        </Text>
+      </TouchableOpacity>
+      {showStartDatePicker && (
+        <DateTimePicker.default
+          value={formData.loanStartDate ? new Date(formData.loanStartDate) : new Date()}
+          mode="date"
+          display="default"
+          onChange={(e, date) => handleDateChange(e, date, 'loanStartDate')}
+        />
+      )}
 
-            <TextInput style={styles.input} placeholder="Loan Duration (in months)" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.loanDurationInMonth}
-                onChangeText={(text) => handleChange('loanDurationInMonth', text)} />
+      {/* End Date */}
+      <TouchableOpacity style={styles.input} onPress={() => setShowEndDatePicker(true)}>
+        <Text style={{ color: formData.loanEndDate ? '#000' : '#999' }}>
+          {formData.loanEndDate || '📅 Select End Date'}
+        </Text>
+      </TouchableOpacity>
+      {showEndDatePicker && (
+        <DateTimePicker.default
+          value={formData.loanEndDate ? new Date(formData.loanEndDate) : new Date()}
+          mode="date"
+          display="default"
+          onChange={(e, date) => handleDateChange(e, date, 'loanEndDate')}
+        />
+      )}
 
-            <TextInput style={styles.input} placeholder="Interest Rate (%)" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.loanInterestRate}
-                onChangeText={(text) => handleChange('loanInterestRate', text)} />
+      {/* Pickers */}
+      <RNPickerSelect
+        style={pickerSelectStyles}
+        value={formData.loanStatus}
+        onValueChange={(value) => handleChange('loanStatus', value)}
+        placeholder={{ label: '📌 Select Loan Status', value: '' }}
+        items={[
+          { label: 'Active', value: 'Active' },
+          { label: 'Closed', value: 'Closed' }
+        ]}
+      />
 
-            <TextInput style={styles.input} placeholder="Loan Status (e.g. Active)" placeholderTextColor="#666"
-                value={formData.loanStatus} onChangeText={(text) => handleChange('loanStatus', text)} />
+      <RNPickerSelect
+        style={pickerSelectStyles}
+        value={formData.loanPaymentStatus}
+        onValueChange={(value) => handleChange('loanPaymentStatus', value)}
+        placeholder={{ label: '📍 Select Payment Status', value: '' }}
+        items={[
+          { label: 'Pending', value: 'Pending' },
+          { label: 'Completed', value: 'Completed' }
+        ]}
+      />
 
-            <TextInput style={styles.input} placeholder="Payment Status (e.g. Pending)" placeholderTextColor="#666"
-                value={formData.loanPaymentStatus} onChangeText={(text) => handleChange('loanPaymentStatus', text)} />
+      <RNPickerSelect
+        style={pickerSelectStyles}
+        value={formData.loanPaymentMode}
+        onValueChange={(value) => handleChange('loanPaymentMode', value)}
+        placeholder={{ label: '💳 Select Payment Mode', value: '' }}
+        items={[
+          { label: 'EMI', value: 'EMI' },
+          { label: 'Online', value: 'Online' },
+          { label: 'Cheque', value: 'Cheque' }
+        ]}
+      />
 
-            <TextInput style={styles.input} placeholder="Payment Mode (e.g. EMI)" placeholderTextColor="#666"
-                value={formData.loanPaymentMode} onChangeText={(text) => handleChange('loanPaymentMode', text)} />
-
-            <TextInput style={styles.input} placeholder="Paid EMI Count" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.payedEMInumber}
-                onChangeText={(text) => handleChange('payedEMInumber', text)} />
-
-            <TextInput style={styles.input} placeholder="Paid EMI Amount" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.payedEMIAmount}
-                onChangeText={(text) => handleChange('payedEMIAmount', text)} />
-
-            <TextInput style={styles.input} placeholder="Remaining EMI Count" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.RemainingEMInumber}
-                onChangeText={(text) => handleChange('RemainingEMInumber', text)} />
-
-            <TextInput style={styles.input} placeholder="Monthly EMI Amount" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.EmiAmmount}
-                onChangeText={(text) => handleChange('EmiAmmount', text)} />
-
-            <TextInput style={styles.input} placeholder="Remaining EMI Amount" keyboardType="numeric"
-                placeholderTextColor="#666" value={formData.RemainingEmiAmmount}
-                onChangeText={(text) => handleChange('RemainingEmiAmmount', text)} />
-
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-                <Text style={styles.submitText}>Submit</Text>
-            </TouchableOpacity>
-        </ScrollView>
-    );
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Text style={styles.submitText}>🚀 Submit</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
 };
 
 export default CreateDueForm;
-
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        backgroundColor: '#eaf6f6',
-        flexGrow: 1,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#0a3d62',
-        marginBottom: 25,
-        textAlign: 'center',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#aaa',
-        borderRadius: 10,
-        padding: 12,
-        fontSize: 16,
-        marginBottom: 12,
-        backgroundColor: '#ffffff',
-        color: '#333',
-    },
-    submitButton: {
-        backgroundColor: '#16a085',
-        padding: 15,
-        borderRadius: 12,
-        alignItems: 'center',
-        marginTop: 25,
-    },
-    submitText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
+  container: {
+    padding: 20,
+    backgroundColor: '#f9f9fb',
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 25,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#bdc3c7',
+    borderRadius: 10,
+    padding: 14,
+    fontSize: 16,
+    marginBottom: 14,
+    backgroundColor: '#ffffff',
+    color: '#2c3e50',
+    elevation: 1,
+  },
+  submitButton: {
+    backgroundColor: '#27ae60',
+    paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 25,
+    elevation: 3,
+  },
+  submitText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: '#bdc3c7',
+    borderRadius: 10,
+    color: '#2c3e50',
+    backgroundColor: '#fff',
+    marginBottom: 14,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: '#bdc3c7',
+    borderRadius: 10,
+    color: '#2c3e50',
+    backgroundColor: '#fff',
+    marginBottom: 14,
+  },
 });

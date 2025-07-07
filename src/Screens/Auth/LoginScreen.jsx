@@ -5,7 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
         Alert.alert('Login Success', 'You are logged in!');
         setEmail('');
         setPassword('');
-        navigation.replace('home'); // go to loan list
+        navigation.replace('home');
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid credentials');
       }
@@ -55,87 +58,116 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+    <ImageBackground
+      source={{ uri: 'https://e1.pxfuel.com/desktop-wallpaper/137/866/desktop-wallpaper-login-page.jpg' }}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+        <View style={styles.formBox}>
+          <Text style={styles.title}> Welcome To Coro!</Text>
 
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Password"
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+          <TextInput
+            placeholder="📧 Enter your Email"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            placeholderTextColor="#999"
+          />
+          <TextInput
+            placeholder="🔑 Enter your Password"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholderTextColor="#999"
+          />
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#007bff" style={{ marginVertical: 20 }} />
-      ) : (
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      )}
+          {loading ? (
+            <ActivityIndicator size="large" color="#ffffff" style={{ marginVertical: 20 }} />
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>🚀 Login</Text>
+            </TouchableOpacity>
+          )}
 
-      <TouchableOpacity style={styles.registerLink} onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.registerText}>Don't have an account? Register</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity style={styles.registerLink} onPress={() => navigation.navigate('RegisterScreen')}>
+            <Text style={styles.registerText}>Don't have an account? <Text style={styles.registerBold}>Register</Text></Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 export default LoginScreen;
-
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
-    padding: 24,
     justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  formBox: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 20,
+    padding: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 8,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#2c3e50',
     textAlign: 'center',
-    marginBottom: 40,
-    color: '#333',
+    marginBottom: 30,
   },
   input: {
-    height: 52,
-    borderColor: '#ccc',
+    height: 55,
     borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    marginBottom: 20,
-    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderRadius: 12,
+    paddingHorizontal: 18,
+    marginBottom: 18,
+    backgroundColor: '#f9f9f9',
     fontSize: 16,
+    color: '#333',
   },
   button: {
-    height: 52,
-    backgroundColor: '#007bff',
-    borderRadius: 10,
+    height: 55,
+    backgroundColor: '#3498db',
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    elevation: 2,
+    elevation: 3,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   registerLink: {
-    marginTop: 20,
+    marginTop: 25,
     alignItems: 'center',
   },
   registerText: {
-    color: '#007bff',
+    color: '#555',
     fontSize: 16,
+  },
+  registerBold: {
+    color: '#e74c3c',
+    fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
 });

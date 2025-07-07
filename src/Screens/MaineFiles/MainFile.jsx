@@ -8,6 +8,8 @@ const MainFile = () => {
   const [loanData, setLoanData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
+  const [name, setName] = useState('');
+  const [user, setUser] = useState({});
 
   const fetchUserAndLoans = async () => {
     try {
@@ -15,7 +17,11 @@ const MainFile = () => {
       if (!userString) return;
 
       const user = JSON.parse(userString);
+      setUser(user);
       setUserEmail(user.email);
+
+      const extractedName = user.name || user.email.split('@')[0];
+      setName(extractedName);
 
       const response = await fetch("https://shop999backend.vercel.app/back-end/rest-API/Secure/api/v1/loans/GetLoanDue-list/api23");
       const result = await response.json();
@@ -53,17 +59,19 @@ const MainFile = () => {
       <Text style={styles.label}>Remaining Due: <Text style={styles.value}>₹{item.RemainingEmiAmmount}</Text></Text>
       <Text style={styles.label}>Duration: <Text style={styles.value}>{item.loanDurationInMonth} months</Text></Text>
       <Text style={styles.label}>Remaining Months: <Text style={styles.value}>{item.RemainingEMInumber}</Text></Text>
-      <Text style={styles.label}>Status: <Text style={[styles.value, { color: item.loanStatus.trim().toLowerCase() === 'active' ? 'green' : 'red' }]}>{item.loanStatus}</Text></Text>
+      <Text style={styles.label}>
+        Status:{' '}
+        <Text style={[styles.value, { color: item.loanStatus.trim().toLowerCase() === 'active' ? 'green' : 'red' }]}>
+          {item.loanStatus}
+        </Text>
+      </Text>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text style={styles.title}>Loan Dues for {userEmail}</Text>
-        <TouchableOpacity onPress={handleLogout}>
-          <Text style={styles.logout}>Logout</Text>
-        </TouchableOpacity>
+        <Text style={styles.title}>Loan Dues for {name}</Text>
       </View>
 
       {loading ? (
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f4f7',
     paddingHorizontal: 16,
     paddingTop: 20,
-    marginBottom: 60
+    marginBottom: 60,
   },
   title: {
     fontSize: 20,
