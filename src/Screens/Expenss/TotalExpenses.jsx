@@ -38,9 +38,10 @@ const TotalExpenses = ({ reload }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>📊 Total Monthly Expenses</Text>
 
       <TouchableOpacity style={styles.card} onPress={handleShowExpense}>
+              <Text style={styles.title}>📊 Total Monthly Expenses</Text>
+
         {loading ? (
           <ActivityIndicator size="small" color="#0d6efd" />
         ) : (
@@ -58,17 +59,18 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginTop: 4,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
+    
   },
   title: {
     fontSize: 20,
     fontWeight: '700',
     color: '#0d6efd',
-    marginBottom: 16,
+    marginBottom: 10,
   },
   card: {
     backgroundColor: '#ffffff',
-    paddingVertical: 20,
+    paddingVertical: 7,
     paddingHorizontal: 40,
     borderRadius: 16,
     alignItems: 'center',
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     borderLeftWidth: 6,
     borderLeftColor: '#0d6efd',
+    paddingBottom:5
   },
   amount: {
     fontSize: 26,

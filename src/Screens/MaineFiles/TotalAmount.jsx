@@ -80,11 +80,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f4f7fa',
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
   },
   totalCard: {
     backgroundColor: '#ffffff',
-    padding: 25,
+    padding: 10,
     borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
