@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const TotalExpenses = ({ reload }) => {
   const navigation = useNavigation();
-
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -28,9 +27,7 @@ const TotalExpenses = ({ reload }) => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchTotalExpenses();
-  }, [reload]);
+
   useEffect(() => {
     fetchTotalExpenses();
   }, [reload]);
@@ -41,14 +38,15 @@ const TotalExpenses = ({ reload }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Total Monthly Expenses</Text>
+      <Text style={styles.title}>📊 Total Monthly Expenses</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleShowExpense}>
+      <TouchableOpacity style={styles.card} onPress={handleShowExpense}>
         {loading ? (
-          <ActivityIndicator size="small" color="#fff" />
+          <ActivityIndicator size="small" color="#0d6efd" />
         ) : (
-          <Text style={styles.totalText}>₹{total.toFixed(2)}</Text>
+          <Text style={styles.amount}>₹{total.toFixed(2)}</Text>
         )}
+        <Text style={styles.linkText}>View All Expenses</Text>
       </TouchableOpacity>
     </View>
   );
@@ -59,28 +57,40 @@ export default TotalExpenses;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 10,
-    paddingHorizontal: 20,
+    marginTop: 4,
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 0,
+    fontWeight: '700',
+    color: '#0d6efd',
+    marginBottom: 16,
   },
-  button: {
-    backgroundColor: '#E8F5E9',
-    paddingVertical: 14,
-    paddingHorizontal: 130,
-    borderRadius: 10,
-    elevation: 3,
+  card: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 20,
+    paddingHorizontal: 40,
+    borderRadius: 16,
+    alignItems: 'center',
+    width: '100%',
+    elevation: 4,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    borderLeftWidth: 6,
+    borderLeftColor: '#0d6efd',
   },
-  totalText: {
-    fontSize: 22,
-    color: '#1B5E20',
-    fontWeight: 'bold',
+  amount: {
+    fontSize: 26,
+    fontWeight: '800',
+    color: '#28a745',
+    marginBottom: 6,
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#0d6efd',
+    textDecorationLine: 'underline',
+    marginTop: 4,
   },
 });

@@ -14,7 +14,7 @@ const TotalAmount = () => {
       if (userString) {
         const user = JSON.parse(userString);
         setUserEmail(user.email);
-        setUserName(user.name || user.email.split('@')[0]); // fallback to email prefix
+        setUserName(user.name || user.email.split('@')[0]);
       } else {
         console.log('User not found in AsyncStorage');
       }
@@ -61,15 +61,13 @@ const TotalAmount = () => {
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator size="large" color="#4CAF50" />
+        <ActivityIndicator size="large" color="#0d6efd" />
       ) : (
         <View style={styles.totalCard}>
           <Text style={styles.totalText}>
-            Total Remaining EMI for {userName}:
+            Total Remaining EMI for <Text style={styles.name}>{userName}</Text>
           </Text>
-          <Text style={[styles.totalText, { fontSize: 24 }]}>
-            ₹{totalLoanAmount.toFixed(2)}
-          </Text>
+          <Text style={styles.amount}>₹{totalLoanAmount.toFixed(2)}</Text>
         </View>
       )}
     </View>
@@ -80,25 +78,37 @@ export default TotalAmount;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    padding: 10,
+    backgroundColor: '#f4f7fa',
     justifyContent: 'center',
+    padding: 20,
   },
   totalCard: {
-    backgroundColor: '#E8F5E9',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 5,
+    backgroundColor: '#ffffff',
+    padding: 25,
+    borderRadius: 16,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 6,
+    borderLeftWidth: 6,
+    borderLeftColor: '#0d6efd',
   },
   totalText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#1B5E20',
-    marginBottom: 4,
+    color: '#333',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  name: {
+    fontWeight: '800',
+    color: '#0d6efd',
+  },
+  amount: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#28a745',
   },
 });

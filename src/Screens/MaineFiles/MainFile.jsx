@@ -54,14 +54,14 @@ const MainFile = () => {
 
   const renderLoanItem = ({ item }) => (
     <TouchableOpacity style={styles.card} onPress={() => handleLoan(item)}>
-      <Text style={styles.label}>Finance: <Text style={styles.value}>{item.loanId}</Text></Text>
-      <Text style={styles.label}>Total Due: <Text style={styles.value}>₹{item.loanAmount}</Text></Text>
-      <Text style={styles.label}>Remaining Due: <Text style={styles.value}>₹{item.RemainingEmiAmmount}</Text></Text>
+      <Text style={styles.label}>Loan ID: <Text style={styles.value}>{item.loanId}</Text></Text>
+      <Text style={styles.label}>Total Amount: <Text style={styles.value}>₹{item.loanAmount}</Text></Text>
+      <Text style={styles.label}>Remaining Amount: <Text style={styles.value}>₹{item.RemainingEmiAmmount}</Text></Text>
       <Text style={styles.label}>Duration: <Text style={styles.value}>{item.loanDurationInMonth} months</Text></Text>
       <Text style={styles.label}>Remaining Months: <Text style={styles.value}>{item.RemainingEMInumber}</Text></Text>
       <Text style={styles.label}>
         Status:{' '}
-        <Text style={[styles.value, { color: item.loanStatus.trim().toLowerCase() === 'active' ? 'green' : 'red' }]}>
+        <Text style={[styles.value, { color: item.loanStatus.trim().toLowerCase() === 'active' ? '#28a745' : '#dc3545' }]}>
           {item.loanStatus}
         </Text>
       </Text>
@@ -70,12 +70,10 @@ const MainFile = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text style={styles.title}>Loan Dues for {name}</Text>
-      </View>
+      <Text style={styles.title}>📋 Loan Summary for {name}</Text>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#4CAF50" />
+        <ActivityIndicator size="large" color="#0d6efd" />
       ) : loanData.length === 0 ? (
         <Text style={styles.noData}>No loans found for this user.</Text>
       ) : (
@@ -95,44 +93,44 @@ export default MainFile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4f7',
+    backgroundColor: '#eef2f5',
     paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingTop: 4,
     marginBottom: 60,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 12,
-  },
-  logout: {
-    color: 'red',
-    fontWeight: 'bold',
-    marginRight: 10,
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#0d6efd',
+    marginBottom: 16,
+    textAlign: 'center',
   },
   noData: {
     textAlign: 'center',
     marginTop: 40,
     fontSize: 18,
-    color: '#999',
+    color: '#6c757d',
   },
   list: {
     paddingBottom: 20,
   },
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
     elevation: 4,
     borderLeftWidth: 6,
-    borderLeftColor: '#4CAF50',
+    borderLeftColor: '#0d6efd',
   },
   label: {
-    fontSize: 16,
-    color: '#555',
-    marginBottom: 4,
+    fontSize: 15,
+    color: '#333',
+    marginBottom: 6,
     fontWeight: '600',
   },
   value: {

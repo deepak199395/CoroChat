@@ -33,7 +33,7 @@ const AppRounter = () => {
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='LoginScreen'>
+            <Stack.Navigator initialRouteName='splashScreen'>
                 <Stack.Screen name='home' component={Home} options={{headerShown:false}}/>
                 <Stack.Screen name='header' component={Header}/>
                 <Stack.Screen name='footer' component={Footer}/>
