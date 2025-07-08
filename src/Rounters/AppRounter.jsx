@@ -29,11 +29,12 @@ import SIP from '../Screens/Options/SIP';
 import Legal from '../Screens/Options/Legal';
 import NetWorthTracker from '../Screens/Options/NetWorthTracker';
 import BillSlid from '../Components/Layout/BillSplid/BillSlid';
+import RegiExpenses from '../Screens/Expenss/RegiExpenses';
 const AppRounter = () => {
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='splashScreen'>
+            <Stack.Navigator initialRouteName='home'>
                 <Stack.Screen name='home' component={Home} options={{headerShown:false}}/>
                 <Stack.Screen name='header' component={Header}/>
                 <Stack.Screen name='footer' component={Footer}/>
@@ -61,6 +62,8 @@ const AppRounter = () => {
                 <Stack.Screen name='NetWorthTracker' component={NetWorthTracker}/>
                 <Stack.Screen name='Legal' component={Legal}/>
                 <Stack.Screen name='BillSlid' component={BillSlid}/>
+                <Stack.Screen name='RegiExpenses' component={RegiExpenses}/>
+
             </Stack.Navigator>
         </NavigationContainer>
  )

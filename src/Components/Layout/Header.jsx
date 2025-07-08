@@ -40,13 +40,7 @@ const Header = ({ onReload }) => {
       {/* Left side: Profile info */}
       <View style={styles.profileContainer}>
         <FontAwesome5Icon name="user-circle" size={30} color="#000" />
-        <Text style={styles.profileName}>
-          {loading
-            ? "Loading..."
-            : userData
-            ? `${userData.firstName} ${userData.lastName}`
-            : "No Data"}
-        </Text>
+        <Text style={styles.profileName}>Coro </Text>
         <MaterialIcon name="verified-user" size={22} color="green" />
       </View>
 

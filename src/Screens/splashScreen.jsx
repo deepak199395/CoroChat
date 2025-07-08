@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
@@ -13,7 +12,6 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-  
       <Image
         source={{
           uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYTkpDt7RrI8-Wy1ns7CM6Kgwb9wJ3vsDadA&s',
@@ -22,7 +20,12 @@ const SplashScreen = ({ navigation }) => {
         resizeMode="contain"
       />
 
-      <Text style={styles.text}>Welcome to Coro App</Text>
+      <Text style={styles.title}>Welcome to Coro App</Text>
+
+      {/* Subtitle fixed at bottom */}
+      <View style={styles.footer}>
+        <Text style={styles.subtitle}>Powered by Deepak Yadav and Team</Text>
+      </View>
     </View>
   );
 };
@@ -35,15 +38,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
+    position: 'relative',
   },
   logo: {
-    width: 450,
-    height: 450,
+    width: 250,
+    height: 250,
   },
-  text: {
-    marginTop: 20,
-    fontSize: 24,
+  title: {
+    marginTop: 30,
+    fontSize: 26,
     fontWeight: 'bold',
-    color: '#34495e',
+    color: '#2c3e50',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    alignItems: 'center',
+  },
+  subtitle: {
+    fontSize: 12,
+    color: '#7f8c8d',
   },
 });

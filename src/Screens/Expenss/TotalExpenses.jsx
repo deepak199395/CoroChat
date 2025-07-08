@@ -35,9 +35,15 @@ const TotalExpenses = ({ reload }) => {
   const handleShowExpense = () => {
     navigation.navigate('ShoWexpances');
   };
+  const handleCreateExpense = () => {
+    navigation.navigate('RegiExpenses');
+  };
 
   return (
     <View style={styles.container}>
+        <TouchableOpacity style={styles.card} onPress={handleCreateExpense}>
+        <Text>Create Expenses Diary </Text>
+        </TouchableOpacity>
 
       <TouchableOpacity style={styles.card} onPress={handleShowExpense}>
               <Text style={styles.title}>📊 Total Monthly Expenses</Text>
@@ -47,7 +53,6 @@ const TotalExpenses = ({ reload }) => {
         ) : (
           <Text style={styles.amount}>₹{total.toFixed(2)}</Text>
         )}
-        <Text style={styles.linkText}>View All Expenses</Text>
       </TouchableOpacity>
     </View>
   );
@@ -58,42 +63,42 @@ export default TotalExpenses;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 4,
-    paddingHorizontal: 10,
-    
+    marginTop: 12,
+    paddingHorizontal: 16,
+    gap: 16,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 18,
+    fontWeight: '600',
     color: '#0d6efd',
-    marginBottom: 10,
+    marginBottom: 6,
+    textAlign: 'center',
   },
   card: {
-    backgroundColor: '#ffffff',
-    paddingVertical: 7,
-    paddingHorizontal: 40,
+    backgroundColor: '#fff',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
     borderRadius: 16,
     alignItems: 'center',
     width: '100%',
-    elevation: 4,
+    elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    borderLeftWidth: 6,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    borderLeftWidth: 5,
     borderLeftColor: '#0d6efd',
-    paddingBottom:5
   },
   amount: {
-    fontSize: 26,
-    fontWeight: '800',
+    fontSize: 24,
+    fontWeight: '700',
     color: '#28a745',
-    marginBottom: 6,
+    marginTop: 4,
   },
   linkText: {
     fontSize: 14,
     color: '#0d6efd',
     textDecorationLine: 'underline',
-    marginTop: 4,
+    marginTop: 6,
   },
 });
